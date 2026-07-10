@@ -1,0 +1,42 @@
+export const journeyData = [
+  {
+    id: 1,
+    short: "01",
+    title: "Academic Excellence",
+    subtitle: "Lucknow",
+    description: "ICSE 96.2%, ISC 97.75%",
+    year: "2020",
+  },
+  {
+    id: 2,
+    short: "02",
+    title: "SRM University",
+    subtitle: "B.Tech CSE",
+    description: "CGPA 9.88 • Department Rank Holder",
+    year: "2022",
+  },
+  {
+    id: 3,
+    short: "03",
+    title: "Projects",
+    subtitle: "Full Stack Development",
+    description: "React • Spring Boot • Python • SQL",
+    year: "2024",
+  },
+  {
+    id: 4,
+    short: "04",
+    title: "Boeing",
+    subtitle: "Software Engineer Apprentice",
+    description: "Automation • Python • VBA • Power BI",
+    year: "2025",
+  },
+  {
+    id: 5,
+    short: "05",
+    title: "Destination",
+    subtitle: "Software Engineer",
+    description: "Building software that creates real impact.",
+    year: "Future",
+  },
+];
