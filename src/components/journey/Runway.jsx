@@ -23,19 +23,21 @@ const Runway = ({ lightsRef, planeRef, activeMilestone, vertical = false }) => {
 
         {/* Plane sits exactly on center line */}
         <div
-  ref={planeRef}
-  className='absolute z-30'
-  style={{
-    opacity: 0,
-    top: vertical ? "0" : "50%",
-    left: vertical ? "50%" : "0",
-    transform: vertical
-      ? "translateX(-50%)"
-      : "translateY(-50%)",
-  }}
->
-  <PlaneIcon />
-</div>
+          ref={planeRef}
+          className='absolute z-30'
+          style={{
+            opacity: 0,
+            top: vertical ? "0" : "50%",
+            left: vertical ? "50%" : "0",
+            transform: vertical
+              ? "translateX(-50%)"
+              : "translateY(-50%)",
+          }}
+        >
+          {/* FIXED: Added vertical prop to PlaneIcon */}
+          <PlaneIcon vertical={vertical} />
+        </div>
+        
         <Milestones activeMilestone={activeMilestone} vertical={vertical} />
       </div>
 

@@ -13,7 +13,6 @@ const Journey = () => {
   const [activeMilestone, setActiveMilestone] = useState(-1);
 
   const isInView = useInView(sectionRef, {
-    once: true,
     amount: 0.2,
   });
 

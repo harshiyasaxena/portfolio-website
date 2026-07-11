@@ -1,9 +1,13 @@
 import planeIcon from "../../assets/plane.png";
+import planeVerticalIcon from "../../assets/plane_vertical.png"; // <--- Add your vertical plane asset here
 
-const PlaneIcon = () => {
+const PlaneIcon = ({ vertical }) => { // <--- Receive the vertical prop here
   return (
-    
-      <img src={planeIcon} alt='plane' className='h-12 w-12 object-contain' />
+    <img 
+      src={vertical ? planeVerticalIcon : planeIcon} // <--- Swaps based on layout direction
+      alt='plane' 
+      className='h-12 w-12 object-contain' 
+    />
   );
 };
 

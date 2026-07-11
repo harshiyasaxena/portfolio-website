@@ -9,24 +9,22 @@ export function useJourney({
   vertical = false,
 }) {
   useEffect(() => {
+    // If the component is not in view, don't trigger
     if (!isInView) return;
     if (!planeRef.current || !lightsRef.current) return;
 
     const lights = lightsRef.current.querySelectorAll(".runway-light");
     const tl = gsap.timeline();
 
-    gsap.set(planeRef.current, {
-      opacity: 0,
-      x: 0,
-      y: 0,
-    });
-
+    // Reset initial state to ensure it starts from scratch every time
+    gsap.set(planeRef.current, { opacity: 0, x: 0, y: 0 });
     gsap.set(lights, {
       backgroundColor: "rgba(255,255,255,.12)",
       boxShadow: "none",
       scale: 1,
     });
 
+    // Animation Sequence
     tl.to(lights, {
       backgroundColor: "#ffffff",
       boxShadow: "0 0 14px #4F8CFF",
@@ -36,11 +34,7 @@ export function useJourney({
     });
 
     tl.to({}, { duration: 0.25 });
-
-    tl.to(planeRef.current, {
-      opacity: 1,
-      duration: 0.4,
-    });
+    tl.to(planeRef.current, { opacity: 1, duration: 0.4 });
 
     const positions = vertical
       ? [60, 190, 320, 450, 580]
@@ -53,10 +47,13 @@ export function useJourney({
         ease: "power2.inOut",
         onComplete: () => onMilestone(index),
       });
-
       tl.to({}, { duration: 0.2 });
     });
 
-    return () => tl.kill();
+    // CLEANUP: Kill the timeline when scrolling away
+    return () => {
+      tl.kill();
+      onMilestone(-1); // Resets cards and milestones immediately
+    };
   }, [isInView, planeRef, lightsRef, onMilestone, vertical]);
 }
