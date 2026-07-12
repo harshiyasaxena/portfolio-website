@@ -31,37 +31,49 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
 
-    emailjs
-      .send(
+    Promise.all([
+      // Email to you
+      emailjs.send(
         import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
         {
           from_name: form.name,
-          to_name: "P",
           from_email: form.email,
-          to_email: "sujata@jsmastery.pro",
+          to_name: "Harshiya",
           message: form.message,
         },
         import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
-      )
-      .then(
-        () => {
-          setLoading(false);
-          alert("Thank you. I will get back to you as soon as possible.");
+      ),
 
-          setForm({
-            name: "",
-            email: "",
-            message: "",
-          });
+      // Auto reply to sender
+      emailjs.send(
+        import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_APP_EMAILJS_AUTOREPLY_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
         },
-        (error) => {
-          setLoading(false);
-          console.error(error);
+        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
+      ),
+    ])
+      .then(() => {
+        setLoading(false);
 
-          alert("Ahh, something went wrong. Please try again.");
-        }
-      );
+        alert("Thank you! Your message has been sent successfully.");
+
+        setForm({
+          name: "",
+          email: "",
+          message: "",
+        });
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error(error);
+
+        alert("Something went wrong. Please try again.");
+      });
   };
 
   return (
@@ -78,7 +90,7 @@ const Contact = () => {
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className='mt-12 flex flex-col gap-8'
+          className="mt-12 flex flex-col"
         >
           <label className='flex flex-col'>
             <span className='text-white font-medium mb-4'>Your Name</span>
@@ -105,7 +117,7 @@ const Contact = () => {
           <label className='flex flex-col'>
             <span className='text-white font-medium mb-4'>Your Message</span>
             <textarea
-              rows={7}
+              rows={5}
               name='message'
               value={form.message}
               onChange={handleChange}
@@ -115,8 +127,23 @@ const Contact = () => {
           </label>
 
           <button
-            type='submit'
-            className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary'
+            type="submit"
+            className="
+    bg-tertiary
+    py-3
+    px-8
+    rounded-xl
+    outline-none
+    w-fit
+    text-white
+    font-bold
+    shadow-md
+    shadow-primary
+    cursor-pointer
+    transition-all
+    duration-300
+    hover:scale-105
+  "
           >
             {loading ? "Sending..." : "Send"}
           </button>
